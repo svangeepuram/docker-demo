@@ -11,6 +11,7 @@ node {
      myTestContainer.inside {
        
        //sh 'npm install --only=dev --unsafe-perm=true --allow-root'
+       sh 'npm cache clean --force'
        sh 'npm install --only=dev '
        sh 'npm test'
      }
@@ -20,7 +21,7 @@ node {
      def myTestContainer = docker.image('node:14.16')
      myTestContainer.pull()
      myTestContainer.inside("--link ${mysql.id}:mysql") { // using linking, mysql will be available at host: mysql, port: 3306
-         
+           sh 'npm cache clean --force'
           //sh 'npm install --only=dev --unsafe-perm=true --allow-root' 
           sh 'npm install --only=dev'
           sh 'npm test'                     
