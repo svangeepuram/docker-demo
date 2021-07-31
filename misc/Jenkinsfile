@@ -12,8 +12,11 @@ node {
      }
    }
    stage('docker build/push') {
-     docker.withRegistry('https://index.docker.io/v1/', 'docker_creds') {
-       def app = docker.build("svangeepuram/docker-nodejs-demo:${commit_id}", '.').push()
-     }
-   }
+     docker.withTool('docker') { 
+         docker.withRegistry('https://index.docker.io/v1/', 'docker_creds') {
+         def app = docker.build("svangeepuram/docker-nodejs-demo:${commit_id}", '.').push()
+         }
+    }
+  }
+     
 }
